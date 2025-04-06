@@ -7,11 +7,15 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+<<<<<<< HEAD
 // User Management
+=======
+>>>>>>> fa348557fcf99f2ce03f13fa6388d3979e6e1240
 model User {
   id            String    @id @default(uuid())
   email         String    @unique
   password      String
+<<<<<<< HEAD
   role          Role      @default(CUSTOMER)
   firstName     String
   lastName      String
@@ -221,4 +225,94 @@ enum PaymentStatus {
   COMPLETED
   FAILED
   REFUNDED
+=======
+  username      String    @unique
+  balance       Float     @default(0)
+  role          Role      @default(USER)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  bets          Bet[]
+  transactions  Transaction[]
+}
+
+model Bet {
+  id          String    @id @default(uuid())
+  userId      String
+  amount      Float
+  odds        Float
+  status      BetStatus @default(PENDING)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  user        User      @relation(fields: [userId], references: [id])
+  event       Event     @relation(fields: [eventId], references: [id])
+  eventId     String
+  selection   String
+}
+
+model Event {
+  id          String    @id @default(uuid())
+  title       String
+  description String?
+  startTime   DateTime
+  endTime     DateTime
+  status      EventStatus @default(SCHEDULED)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  bets        Bet[]
+  odds        EventOdds[]
+}
+
+model EventOdds {
+  id          String    @id @default(uuid())
+  eventId     String
+  selection   String
+  odds        Float
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  event       Event     @relation(fields: [eventId], references: [id])
+}
+
+model Transaction {
+  id          String    @id @default(uuid())
+  userId      String
+  amount      Float
+  type        TransactionType
+  status      TransactionStatus @default(PENDING)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  user        User      @relation(fields: [userId], references: [id])
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum BetStatus {
+  PENDING
+  WON
+  LOST
+  CANCELLED
+}
+
+enum EventStatus {
+  SCHEDULED
+  LIVE
+  COMPLETED
+  CANCELLED
+}
+
+enum TransactionType {
+  DEPOSIT
+  WITHDRAWAL
+  BET
+  WINNING
+}
+
+enum TransactionStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  CANCELLED
+>>>>>>> fa348557fcf99f2ce03f13fa6388d3979e6e1240
 } 

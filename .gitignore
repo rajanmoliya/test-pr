@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Dependencies
 node_modules/
 npm-debug.log*
@@ -31,3 +32,8 @@ Thumbs.db
 prisma/migrations/
 *.db
 *.sqlite 
+=======
+node_modules
+.env
+
+>>>>>>> fa348557fcf99f2ce03f13fa6388d3979e6e1240
