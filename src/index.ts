@@ -24,7 +24,7 @@ app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
 
-// Handle graceful shutdown
+// Handle graceful shutdown OOPS I ADDED THIS LINE
 process.on("SIGTERM", async () => {
   await prisma.$disconnect();
   process.exit(0);
